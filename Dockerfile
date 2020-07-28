@@ -1,6 +1,13 @@
-FROM 0x01be/skywalker-pdk as skywalker-pdk
+ARG PDK_VARIANT=sky130_fd_sc_hd
+
+FROM 0x01be/skywalker-pdk:$PDK_VARIANT as skywalker-pdk
 
 FROM alpine:3.12.0 as builder
+
+COPY --from=skywalker-pdk /opt/skywalker-pdk/ /opt/skywalker-pdk/
+
+ENV PDK_ROOT /opt/skywalker-pdk
+ENV PDK_VARIANT $PDK_VARIANT
 
 RUN apk add --no-cache --virtual build-dependencies \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
@@ -16,9 +23,6 @@ RUN apk add --no-cache --virtual build-dependencies \
 RUN git clone --depth 1 https://github.com/efabless/open_pdks /openpdks
 
 WORKDIR /openpdks
-
-COPY --from=skywalker-pdk /opt/skywalker-pdk/ /opt/skywalker-pdk/
-ENV PDK_ROOT /skywalker-pdk
 
 RUN make
 RUN make install
