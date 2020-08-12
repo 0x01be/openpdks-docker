@@ -2,7 +2,7 @@ ARG PDK_VARIANT=sky130_fd_sc_hd
 
 FROM 0x01be/skywater-pdk:$PDK_VARIANT as skywater-pdk
 
-FROM 0x01be/alpine:edge as builder
+FROM alpine as builder
 
 COPY --from=skywater-pdk /opt/skywater-pdk/ /opt/skywater-pdk/
 
