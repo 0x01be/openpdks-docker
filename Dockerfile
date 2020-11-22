@@ -18,7 +18,3 @@ ENV PDK_ROOT=/opt/skywater-pdk
 RUN make
 RUN make install
 
-FROM alpine
-
-COPY --from=build /opt/openpdks/ /opt/openpdks/
-
