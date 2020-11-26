@@ -1,20 +1,29 @@
 ARG PDK_VARIANT=all
-ARG REVISION=master
 
 FROM 0x01be/skywater-pdk:$PDK_VARIANT as build
 
+ARG REVISION=master
 RUN apk add --no-cache --virtual openpdks-build-dependencies \
+    coreutils \
     bash \
     python3 \
     tcl \
-    tk
+    tk \
+    cairo \
+    glu &&\
+    git clone --depth 1 --branch ${REVISION} https://github.com/RTimothyEdwards/open_pdks.git /opt/openpdks
 
-RUN git clone --depth 1 --branch ${REVISION} https://github.com/RTimothyEdwards/open_pdks.git /opt/openpdks
+COPY --from=0x01be/magic:build /opt/magic/ /opt/magic/
 
 WORKDIR /opt/openpdks
 
 ENV PDK_ROOT=/opt/skywater-pdk
-RUN ./configure --with-sky130-source=/opt/skywater --with-sky130-local-path=/opt/skywater
-RUN make
-RUN make install
+
+RUN ln -s /opt/magic/bin/magic /usr/bin/magic &&\
+    ./configure \
+    --with-sky130-source=/opt/skywater-pdk \
+    --with-sky130-local-path=/opt/skywater-pdk \
+    --with-sky130-dist-path=/opt/skywater-pdk  &&\
+    make &&\
+    make install
 
