@@ -26,6 +26,5 @@ RUN ln -s /opt/magic/bin/magic /usr/bin/magic &&\
     --with-sky130-local-path=/opt/skywater-pdk \
     --with-sky130-dist-path=/opt/skywater-pdk  &&\
     make &&\
-    sed -i.bak "s/ version/ version $(date '+%Y%m%d%H%M%S')/" /opt/openpdks/sky130/sky130A/libs.tech/magic/current/sky130A.tech &&\
     make install
 
