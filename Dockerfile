@@ -1,5 +1,7 @@
 ARG PDK_VARIANT=all
 
+FROM 0x01be/magic:xpra as magic
+
 FROM 0x01be/skywater-pdk:$PDK_VARIANT as build
 
 RUN apk add --no-cache --virtual openpdks-build-dependencies \
@@ -11,7 +13,7 @@ RUN apk add --no-cache --virtual openpdks-build-dependencies \
     cairo \
     glu
 
-COPY --from=0x01be/magic:xpra /opt/magic/ /opt/magic/
+COPY --from=magic /opt/magic/ /opt/magic/
 
 ENV PDK_ROOT=/opt/skywater-pdk \
     REVISION=master
