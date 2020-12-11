@@ -1,4 +1,4 @@
-ARG PDK_VARIANT=v0.0.0-303-g3d7617a
+ARG PDK_VARIANT=all
 
 FROM 0x01be/magic:xpra as magic
 
