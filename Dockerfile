@@ -1,4 +1,4 @@
-ARG PDK_VARIANT=all
+ARG PDK_VARIANT=minimal
 
 FROM 0x01be/magic:xpra as magic
 
