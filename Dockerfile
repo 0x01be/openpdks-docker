@@ -20,7 +20,7 @@ ENV PDK_ROOT=/opt/skywater-pdk \
     REVISION=1.0.85
 RUN git clone --depth 1 --branch ${REVISION} https://github.com/RTimothyEdwards/open_pdks.git /opt/openpdks &&\
     ln -s /opt/magic/bin/magic /usr/bin/magic &&\
-    sed -i.bak "s/ version REVISION/ version mpw-one-b/" /opt/openpdks/sky130/magic/sky130.tech &&\
+    sed -i.bak "s/ version REVISION/ version 1.0.85/" /opt/openpdks/sky130/magic/sky130.tech &&\
     ./configure \
     --with-sky130-source=/opt/skywater-pdk \
     --with-sky130-local-path=/opt/skywater-pdk \
